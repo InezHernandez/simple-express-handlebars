@@ -16,28 +16,56 @@ Object.keys(people).forEach(function (person) {
   }
 });
 
-// Serve static files from public/.
-app.use(express.static(path.join(__dirname, 'public')));
-
+/*
+ * Set up Express to use express-handlebars as the view engine.  This means
+ * that when you call res.render('page'), Express will look in `views/` for a
+ * file named `page` (express-handlebars will recognize the .handlebars
+ * extension), and it will use express-handlebars to render the content of that
+ * file into HTML.
+ *
+ * Here, we're also setting express-handlebars to use 'main' as the default
+ * layout.  This means that, if we can res.render('page'), express-handlebars
+ * will take the content from `views/page.handlebars` and plug it into the
+ * {{{body}}} placeholder in `views/layouts/main.handlebars`.
+ */
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars');
 
+// Serve static files from public/.
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Render the index page for the root URL path ('/').
 app.get('/', function (req, res) {
-  res.render('index-page');
+  res.render('index-page', {
+    pageTitle: 'Welcome!'
+  });
 });
 
+/*
+ * Render the people page for the URL path '/people'.  Pass our people data
+ * to Handlebars to use in filling out the page template.
+ */
 app.get('/people', function (req, res) {
-  res.render('people-page', { people: people });
+  res.render('people-page', {
+    pageTitle: 'Famous People',
+    people: people
+  });
 });
 
-
+/*
+ * Use a dynamic route to render a page for each individual person.  Provide
+ * that person's data to Handlebars so it can fill out the template.
+ */
 app.get('/people/:person', function (req, res, next) {
 
   var person = people[req.params.person];
 
   if (person) {
 
-    res.render('person-page', person);
+    res.render('person-page', {
+      pageTitle: person.name,
+      person: person
+    });
 
   } else {
 
@@ -50,7 +78,9 @@ app.get('/people/:person', function (req, res, next) {
 
 // If we didn't find the requested resource, send a 404 error.
 app.get('*', function(req, res) {
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  res.status(404).render('404-page', {
+    pageTitle: '404'
+  });
 });
 
 // Listen on the specified port.

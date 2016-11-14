@@ -47,3 +47,8 @@ a:hover {
 .highlight a:hover {
   background-color: #b4cb98;
 }
+
+.error-message {
+  font-size: 32px;
+  margin: 20px;
+}

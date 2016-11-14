@@ -1,10 +1,7 @@
-<header>
-  <h1>Famous People</h1>
-</header>
+{{> header}}
+
 <main>
   {{#each people}}
-    <div class="person{{#if is65OrOlder}} highlight{{/if}}">
-      <p><a href="/people/{{@key}}">{{name}}</p>
-    </div>
+    {{> person-link this key=@key}}
   {{/each}}
 </main>

@@ -4,6 +4,11 @@
     "job": "Jedi Knight",
     "age": 24
   },
+  "beyonce": {
+    "name": "Beyonce Knowles-Carter",
+    "job": "Singer-Songwriter",
+    "age": 35
+  },
   "albert": {
     "name": "Albert Einetein",
     "job": "Scientist",
@@ -23,6 +28,11 @@
     "name": "John Steinbeck",
     "job": "Author",
     "age": 57
+  },
+  "elizabeth": {
+    "name": "Elizabeth Cady Stanton",
+    "job": "Butt-Kicker",
+    "age": 75
   },
   "donald": {
     "name": "Donald Knuth",
